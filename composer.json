@@ -1,0 +1,35 @@
+{
+  "name": "agendum/agendum-vtiger-adapter",
+  "description": "An adapter to integrate Agendum with Vtiger CRM modules",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Francesco Bianco",
+      "email": "bianco@javanile.org"
+    }
+  ],
+  "require": {
+    "php": "^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0|^10.0",
+    "phpstan/phpstan": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Verbania\\SDK\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Verbania\\SDK\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true
+  }
+
+}
