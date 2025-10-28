@@ -8,7 +8,6 @@ push:
 
 release: push
 	@git add .
-	@git commit -m "Update Agendum SDK to version ${AGENDUM_VTA_VERSION}" || echo "No changes to commit"
+	@git commit -m "Update Agendum Vtiger Adapter to version ${AGENDUM_VTA_VERSION}" || echo "No changes to commit"
 	@git tag -fa "v${AGENDUM_VTA_VERSION}" -m "${AGENDUM_VTA_VERSION}"
 	@git push origin --tags -f
-
