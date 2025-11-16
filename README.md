@@ -46,6 +46,26 @@ Install via Composer:
 composer require agendum/vtiger-adapter
 ```
 
+### Production Setup
+
+For production use, add the following to your `composer.json` autoload section:
+
+```json
+{
+  "autoload": {
+    "files": [
+      "vendor/agendum/vtiger-adapter/src/autoload.php"
+    ]
+  }
+}
+```
+
+Then regenerate the autoloader:
+
+```bash
+composer dump-autoload
+```
+
 ## Usage
 
 Once installed, the adapter classes are automatically available. Legacy Vtiger modules will be able to find and use the `Vtiger_*` classes, which seamlessly extend their modern `Agendum_*` counterparts.
