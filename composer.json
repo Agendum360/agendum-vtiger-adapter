@@ -16,7 +16,11 @@
     "pestphp/pest": "^2.0",
     "phpstan/phpstan": "^1.0"
   },
-  "autoload": {},
+  "autoload": {
+    "files": [
+      "src/autoload.php"
+    ]
+  },
   "autoload-dev": {
     "psr-4": {
       "Tests\\": "tests/"

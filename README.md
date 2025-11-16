@@ -72,6 +72,40 @@ Once installed, the adapter classes are automatically available. Legacy Vtiger m
 
 No code changes are required in your existing modules - they will continue to work as expected.
 
+## Testing Environment
+
+For testing purposes, this library includes **conditional mock classes** that are only activated when:
+
+1. The environment variable `VTIGER_ADAPTER_TESTING` is set to `'true'`
+2. The library is running in its own development environment (not as a third-party dependency)
+3. The required Agendum classes don't already exist
+
+### Important Security Note
+
+⚠️ **The mock classes are ONLY activated in this specific project's testing environment.** They will never interfere with third-party projects that install this library as a dependency. The mocks are conditionally loaded based on:
+
+- Detection of the specific project directory name
+- Explicit testing environment variable (`VTIGER_ADAPTER_TESTING=true`)
+- Verification that parent classes don't exist
+
+This ensures that when deployed in production Agendum environments or installed as a dependency, only the real adapter functionality is active.
+
+## Development
+
+To run tests locally:
+
+```bash
+# Install dependencies
+composer install
+
+# Run tests with environment variable
+VTIGER_ADAPTER_TESTING=true ./vendor/bin/pest
+
+# Or export it for your session
+export VTIGER_ADAPTER_TESTING=true
+./vendor/bin/pest
+```
+
 ## License
 
 To be defined. Final license terms will clarify compatibility with the Vtiger CRM Public License 1.1 for derivative portions of the work.
