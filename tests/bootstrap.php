@@ -1,6 +1,46 @@
 <?php
 
+// Mock interfaces and classes needed for testing first
+if (!interface_exists('ServerRequestInterface')) {
+    interface ServerRequestInterface {
+        public function getServerParams(): array;
+        public function getCookieParams(): array;
+        public function withCookieParams(array $cookies);
+        public function getQueryParams(): array;
+        public function withQueryParams(array $query);
+        public function getUploadedFiles(): array;
+        public function withUploadedFiles(array $uploadedFiles);
+        public function getParsedBody();
+        public function withParsedBody($data);
+        public function getAttributes(): array;
+        public function getAttribute(string $name, $default = null);
+        public function withAttribute(string $name, $value);
+        public function withoutAttribute(string $name);
+        public function getRequestTarget(): string;
+        public function withRequestTarget($requestTarget);
+        public function getMethod(): string;
+        public function withMethod($method);
+        public function getUri();
+        public function withUri($uri, $preserveHost = false);
+        public function getProtocolVersion(): string;
+        public function withProtocolVersion($version);
+        public function getHeaders(): array;
+        public function hasHeader($name): bool;
+        public function getHeader($name): array;
+        public function getHeaderLine($name): string;
+        public function withHeader($name, $value);
+        public function withAddedHeader($name, $value);
+        public function withoutHeader($name);
+        public function getBody();
+        public function withBody($body);
+    }
+}
+if (!class_exists('SmartyBC')) {
+    class SmartyBC {}
+}
+
 // Mock Agendum classes for testing
+abstract class Agendum_EntryPoint {}
 class Agendum_Session {}
 class Agendum_WebUI extends Agendum_EntryPoint {}
 class Agendum_Response {}
@@ -42,7 +82,6 @@ class Agendum_Viewer extends SmartyBC {}
 class Agendum_Language_Handler {}
 class Agendum_Theme extends Agendum_Viewer {}
 class Agendum_Cache {}
-abstract class Agendum_EntryPoint {}
 class Agendum_Cache_Connector {}
 class Agendum_Cache_Connector_Memory extends Agendum_Cache_Connector {}
 class Agendum_JavaScript extends Agendum_Viewer {}
@@ -50,30 +89,25 @@ abstract class Agendum_Controller {}
 abstract class Agendum_Action_Controller extends Agendum_Controller {}
 abstract class Agendum_View_Controller extends Agendum_Action_Controller {}
 
-// Mock interfaces and classes needed for testing
-if (!interface_exists('ServerRequestInterface')) {
-    interface ServerRequestInterface {}
-}
-if (!class_exists('SmartyBC')) {
-    class SmartyBC {}
-}
+// Define testing environment to skip conditional loading
+define('AGENDUM_TESTING', true);
 
-// Now include our adapter classes
+// Now include our adapter classes manually for testing
 require_once __DIR__ . '/../src/AppException.php';
+require_once __DIR__ . '/../src/Vtiger_EntryPoint.php';
+require_once __DIR__ . '/../src/Vtiger_Controller.php';
 require_once __DIR__ . '/../src/Vtiger_Action_Controller.php';
+require_once __DIR__ . '/../src/Vtiger_View_Controller.php';
+require_once __DIR__ . '/../src/Vtiger_Session.php';
+require_once __DIR__ . '/../src/Vtiger_Response.php';
+require_once __DIR__ . '/../src/Vtiger_Loader.php';
+require_once __DIR__ . '/../src/Vtiger_Request.php';
 require_once __DIR__ . '/../src/Vtiger_Base_Model.php';
+require_once __DIR__ . '/../src/Vtiger_Viewer.php';
+require_once __DIR__ . '/../src/Vtiger_Language_Handler.php';
+require_once __DIR__ . '/../src/Vtiger_Theme.php';
 require_once __DIR__ . '/../src/Vtiger_Cache.php';
 require_once __DIR__ . '/../src/Vtiger_Cache_Connector.php';
 require_once __DIR__ . '/../src/Vtiger_Cache_Connector_Memory.php';
-require_once __DIR__ . '/../src/Vtiger_Controller.php';
-require_once __DIR__ . '/../src/Vtiger_EntryPoint.php';
 require_once __DIR__ . '/../src/Vtiger_JavaScript.php';
-require_once __DIR__ . '/../src/Vtiger_Language_Handler.php';
-require_once __DIR__ . '/../src/Vtiger_Loader.php';
-require_once __DIR__ . '/../src/Vtiger_Request.php';
-require_once __DIR__ . '/../src/Vtiger_Response.php';
-require_once __DIR__ . '/../src/Vtiger_Session.php';
-require_once __DIR__ . '/../src/Vtiger_Theme.php';
-require_once __DIR__ . '/../src/Vtiger_View_Controller.php';
-require_once __DIR__ . '/../src/Vtiger_Viewer.php';
 require_once __DIR__ . '/../src/Vtiger_WebUI.php';
