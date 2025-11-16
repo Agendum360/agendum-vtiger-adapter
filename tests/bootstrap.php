@@ -1,98 +1,34 @@
 <?php
 
-// Mock interfaces and classes needed for testing first
-if (!interface_exists('ServerRequestInterface')) {
-    interface ServerRequestInterface {
-        public function getServerParams(): array;
-        public function getCookieParams(): array;
-        public function withCookieParams(array $cookies);
-        public function getQueryParams(): array;
-        public function withQueryParams(array $query);
-        public function getUploadedFiles(): array;
-        public function withUploadedFiles(array $uploadedFiles);
-        public function getParsedBody();
-        public function withParsedBody($data);
-        public function getAttributes(): array;
-        public function getAttribute(string $name, $default = null);
-        public function withAttribute(string $name, $value);
-        public function withoutAttribute(string $name);
-        public function getRequestTarget(): string;
-        public function withRequestTarget($requestTarget);
-        public function getMethod(): string;
-        public function withMethod($method);
-        public function getUri();
-        public function withUri($uri, $preserveHost = false);
-        public function getProtocolVersion(): string;
-        public function withProtocolVersion($version);
-        public function getHeaders(): array;
-        public function hasHeader($name): bool;
-        public function getHeader($name): array;
-        public function getHeaderLine($name): string;
-        public function withHeader($name, $value);
-        public function withAddedHeader($name, $value);
-        public function withoutHeader($name);
-        public function getBody();
-        public function withBody($body);
-    }
-}
-if (!class_exists('SmartyBC')) {
-    class SmartyBC {}
+// Define testing environment FIRST to prevent production autoloader conflicts  
+if (!defined('AGENDUM_TESTING')) {
+    define('AGENDUM_TESTING', true);
 }
 
-// Mock Agendum classes for testing
-abstract class Agendum_EntryPoint {}
-class Agendum_Session {}
-class Agendum_WebUI extends Agendum_EntryPoint {}
-class Agendum_Response {}
-class Agendum_Loader {}
-class Agendum_Request implements ServerRequestInterface {
-    public function getServerParams(): array { return []; }
-    public function getCookieParams(): array { return []; }
-    public function withCookieParams(array $cookies) { return $this; }
-    public function getQueryParams(): array { return []; }
-    public function withQueryParams(array $query) { return $this; }
-    public function getUploadedFiles(): array { return []; }
-    public function withUploadedFiles(array $uploadedFiles) { return $this; }
-    public function getParsedBody() { return null; }
-    public function withParsedBody($data) { return $this; }
-    public function getAttributes(): array { return []; }
-    public function getAttribute(string $name, $default = null) { return $default; }
-    public function withAttribute(string $name, $value) { return $this; }
-    public function withoutAttribute(string $name) { return $this; }
-    public function getRequestTarget(): string { return ''; }
-    public function withRequestTarget($requestTarget) { return $this; }
-    public function getMethod(): string { return ''; }
-    public function withMethod($method) { return $this; }
-    public function getUri() { return null; }
-    public function withUri($uri, $preserveHost = false) { return $this; }
-    public function getProtocolVersion(): string { return '1.1'; }
-    public function withProtocolVersion($version) { return $this; }
-    public function getHeaders(): array { return []; }
-    public function hasHeader($name): bool { return false; }
-    public function getHeader($name): array { return []; }
-    public function getHeaderLine($name): string { return ''; }
-    public function withHeader($name, $value) { return $this; }
-    public function withAddedHeader($name, $value) { return $this; }
-    public function withoutHeader($name) { return $this; }
-    public function getBody() { return null; }
-    public function withBody($body) { return $this; }
-}
-class Agendum_Base_Model {}
-class Agendum_Viewer extends SmartyBC {}
-class Agendum_Language_Handler {}
-class Agendum_Theme extends Agendum_Viewer {}
-class Agendum_Cache {}
-class Agendum_Cache_Connector {}
-class Agendum_Cache_Connector_Memory extends Agendum_Cache_Connector {}
-class Agendum_JavaScript extends Agendum_Viewer {}
-abstract class Agendum_Controller {}
-abstract class Agendum_Action_Controller extends Agendum_Controller {}
-abstract class Agendum_View_Controller extends Agendum_Action_Controller {}
+// Load mock interfaces and dependencies first
+require_once __DIR__ . '/Mocks/ServerRequestInterface.php';
+require_once __DIR__ . '/Mocks/SmartyBC.php';
 
-// Define testing environment to skip conditional loading
-define('AGENDUM_TESTING', true);
+// Load mock Agendum classes in correct order (dependencies first)
+require_once __DIR__ . '/Mocks/Agendum_EntryPoint.php';
+require_once __DIR__ . '/Mocks/Agendum_Session.php';
+require_once __DIR__ . '/Mocks/Agendum_Response.php';
+require_once __DIR__ . '/Mocks/Agendum_Loader.php';
+require_once __DIR__ . '/Mocks/Agendum_Request.php';
+require_once __DIR__ . '/Mocks/Agendum_Base_Model.php';
+require_once __DIR__ . '/Mocks/Agendum_Viewer.php';
+require_once __DIR__ . '/Mocks/Agendum_Language_Handler.php';
+require_once __DIR__ . '/Mocks/Agendum_Cache.php';
+require_once __DIR__ . '/Mocks/Agendum_Cache_Connector.php';
+require_once __DIR__ . '/Mocks/Agendum_Cache_Connector_Memory.php';
+require_once __DIR__ . '/Mocks/Agendum_Controller.php';
+require_once __DIR__ . '/Mocks/Agendum_Action_Controller.php';
+require_once __DIR__ . '/Mocks/Agendum_View_Controller.php';
+require_once __DIR__ . '/Mocks/Agendum_JavaScript.php';
+require_once __DIR__ . '/Mocks/Agendum_Theme.php';
+require_once __DIR__ . '/Mocks/Agendum_WebUI.php';
 
-// Now include our adapter classes manually for testing
+// Now include our adapter classes
 require_once __DIR__ . '/../src/AppException.php';
 require_once __DIR__ . '/../src/Vtiger_EntryPoint.php';
 require_once __DIR__ . '/../src/Vtiger_Controller.php';

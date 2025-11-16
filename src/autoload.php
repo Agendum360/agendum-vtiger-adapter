@@ -3,6 +3,11 @@
 // Agendum Vtiger Adapter - Class mapping loader
 // This file provides backward compatibility by mapping old Vtiger class names to new Agendum class names
 
+// Skip if we're in testing environment (prevents conflicts with test mocks)
+if (defined('AGENDUM_TESTING') && AGENDUM_TESTING) {
+    return;
+}
+
 $adapterFiles = [
     'AppException.php',
     'Vtiger_EntryPoint.php',      // Load abstract classes first
@@ -24,19 +29,17 @@ $adapterFiles = [
     'Vtiger_WebUI.php'
 ];
 
-// Load adapter classes if not in testing environment
-if (!defined('AGENDUM_TESTING')) {
-    foreach ($adapterFiles as $file) {
-        $classPath = __DIR__ . '/' . $file;
-        if (file_exists($classPath)) {
-            try {
-                require_once $classPath;
-            } catch (Error $e) {
-                // Parent Agendum class not found - this is expected in environments without Agendum
-                // Log only if debug mode is enabled
-                if (defined('AGENDUM_DEBUG') && AGENDUM_DEBUG) {
-                    error_log("Agendum Vtiger Adapter: Could not load $file - " . $e->getMessage());
-                }
+// Load adapter classes in production environment
+foreach ($adapterFiles as $file) {
+    $classPath = __DIR__ . '/' . $file;
+    if (file_exists($classPath)) {
+        try {
+            require_once $classPath;
+        } catch (Error $e) {
+            // Parent Agendum class not found - this is expected in environments without Agendum
+            // Log only if debug mode is enabled
+            if (defined('AGENDUM_DEBUG') && AGENDUM_DEBUG) {
+                error_log("Agendum Vtiger Adapter: Could not load $file - " . $e->getMessage());
             }
         }
     }
