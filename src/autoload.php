@@ -4,7 +4,6 @@
 // This file loads all Vtiger adapter classes that extend Agendum classes
 
 $files = [
-    'AppException.php',
     'Vtiger_EntryPoint.php',
     'Vtiger_Controller.php',
     'Vtiger_Action_Controller.php',

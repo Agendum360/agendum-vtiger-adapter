@@ -82,13 +82,10 @@ test('vtiger view controller class exists and extends agendum view controller', 
     expect(is_subclass_of('Vtiger_View_Controller', 'Agendum_View_Controller'))->toBeTrue();
 });
 
-/*
+
 test('vtiger webui class exists and extends agendum webui', function () {
     expect(class_exists('Vtiger_WebUI'))->toBeTrue();
     expect(is_subclass_of('Vtiger_WebUI', 'Agendum_WebUI'))->toBeTrue();
 });
-*/
 
-test('app exception class exists', function () {
-    expect(class_exists('AppException'))->toBeTrue();
-});
+

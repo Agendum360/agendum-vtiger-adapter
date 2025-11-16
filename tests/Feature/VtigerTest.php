@@ -39,10 +39,3 @@ test('vtiger class inheritance chain is correct', function () {
     expect(is_subclass_of('Vtiger_Action_Controller', 'Agendum_Controller'))->toBeTrue();
 });
 
-test('exception class works correctly', function () {
-    expect(fn() => new AppException('Test message'))->not->toThrow(Error::class);
-    
-    $exception = new AppException('Test message');
-    expect($exception)->toBeInstanceOf('Exception');
-    expect($exception->getMessage())->toBe('Test message');
-});
