@@ -18,7 +18,7 @@
   },
   "autoload": {
     "files": [
-      "src/autoload.php"
+      "src/aliases.php"
     ]
   },
   "autoload-dev": {
