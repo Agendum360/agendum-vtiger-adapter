@@ -22,6 +22,7 @@ $aliases = [
     'Agendum_Cache_Connector_Memory'=> ['Vtiger_Cache_Connector_Memory','includes/runtime/CacheConnectorMemory.php'],
     'Agendum_JavaScript'            => ['Vtiger_JavaScript',            'includes/runtime/JavaScript.php'],
     'Agendum_WebUI'                 => ['Vtiger_WebUI',                 'includes/main/WebUI.php'],
+    'Agendum_Utils'                 => ['Vtiger_Utils',                 'psr0/Vtiger/Utils.php'],
 ];
 
 foreach ($aliases as $agendumClass => [$vtigerClass, $file]) {
